@@ -179,7 +179,7 @@ print(out.decode())
 					<h2>Pure Python advantages</h2>
 					<ul>
 						<li class="fragment">No external libraries required</li>
-						<li class="fragment">Unix-based OSes usually come with Python pre-installed</li>
+						<li class="fragment">Unix-based OSes usually come with pre-installed Python</li>
 					</ul>
 				</section>
 
@@ -192,13 +192,97 @@ print(out.decode())
 
 				<section>
 					<h2>IPython</h2>
-					<pre><code class="hljs" data-trim contenteditable>
+					<pre><code class="bash hljs" data-trim contenteditable>
 %env HOME
-%ls -la
-!ls -la | grep exemplo
-files = !ls -la
+%pwd
+%cd
+%ls -l
+%ls -l | grep Downloads
+files = !ls # it automatically parses the output into a list
+files
+files = !ls -l
+files
 					</code></pre>
 					<p>Accessing env variables and listing</p>
+				</section>
+
+				<section>
+					<h2>IPython</h2>
+					<pre><code class="python hljs" data-trim contenteditable>
+type(files)
+files.grep('Downloads')
+
+for fileline in files:
+    print(fileline.split()[-1])
+
+for fileline in files.fields():
+    print(fileline[-1])
+					</code></pre>
+					<p>The SList object</p>
+				</section>
+
+				<section>
+					<h2>IPython advantages</h2>
+					<ul>
+						<li class="fragment">Easy to call/nest powerful system commands and executables</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>IPython drawbacks</h2>
+					<ul>
+						<li class="fragment">Changes the language's syntax</li>
+						<li class="fragment">May require an exact IPython version</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>Plumbum</h2>
+					<pre><code class="bash hljs" data-trim contenteditable>
+from plumbum import local
+ls = local['ls']
+ls
+ls()
+files = ls().split()
+print(files)
+
+ls['-a']
+files = ls['-a']()
+print(files)
+					</code></pre>
+					<p>Listing files</p>
+				</section>
+
+				<section>
+					<h2>Plumbum</h2>
+					<pre><code class="bash hljs" data-trim contenteditable>
+from plumbum import grep, wc
+ls['-a'] | grep['\\.']
+ls_grep = ls['-a'] | grep['\\.']
+ls_grep()
+
+files = [f for f in ls_grep().split() if f != '.' and f != '..']
+print(files)
+
+file_count = int((ls_grep | wc['-l'])()) - 2
+file_count
+					</code></pre>
+					<p>Nesting commands</p>
+				</section>
+
+				<section>
+					<h2>Plumbum advantages</h2>
+					<ul>
+						<li class="fragment">Pure Python, no syntax changes</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>Plumbum drawbacks</h2>
+					<ul>
+						<li class="fragment">Requires an external library</li>
+						<li class="fragment">Less similar to the classic shell scripts</li>
+					</ul>
 				</section>
 
 			</div>
@@ -218,7 +302,7 @@ files = !ls -la
 				history: true,
 				center: true,
 
-				transition: 'slide', // none/fade/slide/convex/concave/zoom
+				transition: 'fade', // none/fade/slide/convex/concave/zoom
 
 				// Optional reveal.js plugins
 				dependencies: [
