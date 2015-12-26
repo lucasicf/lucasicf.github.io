@@ -238,7 +238,7 @@ for fileline in files.fields():
 
 				<section>
 					<h2>Plumbum</h2>
-					<pre><code class="bash hljs" data-trim contenteditable>
+					<pre><code class="python hljs" data-trim contenteditable>
 from plumbum import local
 ls = local['ls']
 ls
@@ -255,7 +255,7 @@ print(files)
 
 				<section>
 					<h2>Plumbum</h2>
-					<pre><code class="bash hljs" data-trim contenteditable>
+					<pre><code class="python hljs" data-trim contenteditable>
 from plumbum import grep, wc
 ls['-a'] | grep['\\.']
 ls_grep = ls['-a'] | grep['\\.']
@@ -274,6 +274,7 @@ file_count
 					<h2>Plumbum advantages</h2>
 					<ul>
 						<li class="fragment">Pure Python, no syntax changes</li>
+						<li class="fragment">Better readability</li>
 					</ul>
 				</section>
 
@@ -281,7 +282,133 @@ file_count
 					<h2>Plumbum drawbacks</h2>
 					<ul>
 						<li class="fragment">Requires an external library</li>
-						<li class="fragment">Less similar to the classic shell scripts</li>
+						<li class="fragment">Less similar to classic shell scripting</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>xonsh</h2>
+					<pre><code class="bash hljs" data-trim contenteditable>
+pip3 install xonsh
+					</code></pre>
+					<p>Installing xonsh</p>
+				</section>
+
+				<section>
+					<h2>xonsh</h2>
+					<pre><code class="python hljs" data-trim contenteditable>
+ls ~
+$(ls ~)
+$(ls ~).split()
+touch "~/file with spaces"
+$(ls ~).split()
+$(ls ~).split('\n')
+$(ls ~).split('\n')[:-1]
+len($(ls ~).split('\n')[:-1])
+					</code></pre>
+					<p>(Again...) Listing files</p>
+				</section>
+
+				<section>
+					<h2>xonsh</h2>
+					<pre><code class="python hljs" data-trim contenteditable>
+arquivos = $(ls ~).split('\n')[:-1]
+print(arquivos)
+echo @(arquivos)
+
+# Env variable below
+$arquivos = $(ls ~).split('\n')[:-1]
+print($arquivos)
+echo $arquivos
+					</code></pre>
+					<p>Printing variables in both Shell and Python statements</p>
+				</section>
+
+				<section>
+					<h2>xonsh</h2>
+					<pre><code class="python hljs" data-trim contenteditable>
+def ls_files_home():
+    return $(ls ~).split('\n')[:-1]
+
+ls_files_home()
+
+def ls_files(dir):
+    return $(ls @(dir)).split('\n')[:-1]
+
+ls_files('/')
+ls_files($HOME)
+
+home_var_name = 'HOME'
+ls_files(${home_var_name})
+					</code></pre>
+					<p>Functions: plain old Python</p>
+				</section>
+
+				<section>
+					<h2>xonsh</h2>
+					<pre><code class="python hljs" data-trim contenteditable>
+ps ux
+$(ps ux)
+$(ps ux).split('\n')
+$(ps ux).split('\n')[:-1]
+[proc.split() for proc in $(ps ux).split('\n')[:-1]]
+					</code></pre>
+					<p>Listing processes</p>
+				</section>
+
+				<section>
+					<h2>xonsh</h2>
+					<pre><code class="python hljs" data-trim contenteditable>
+procs_info = [proc.split() for proc in $(ps ux).split('\n')[:-1]]
+headers = procs_info[0]
+procs = []
+for proc_info in procs_info[1:]:
+    proc_dict = {}
+    for (index, header) in enumerate(headers):
+        proc_dict[header] = proc_info[index]
+    procs.append(proc_dict)
+
+procs
+procs[0]
+echo @(procs)
+					</code></pre>
+					<p>Building a dictionary from the command's output</p>
+				</section>
+
+				<section>
+					<h2>xonsh</h2>
+					<pre><code class="python hljs" data-trim contenteditable>
+import json
+echo @(json.dumps(procs))
+echo @(json.dumps(procs)) > procs.json
+cat procs.json
+					</code></pre>
+					<p>Saving as a JSON file</p>
+				</section>
+
+				<section>
+					<h2>xonsh</h2>
+					<pre><code class="bash hljs" data-trim contenteditable>
+sudo echo "/usr/local/bin/xonsh" >> /etc/shells
+chsh -s /usr/local/bin/xonsh
+					</code></pre>
+					<p>Setting as the standard shell</p>
+				</section>
+
+				<section>
+					<h2>xonsh advantages</h2>
+					<ul>
+						<li class="fragment">Bash-like commands</li>
+						<li class="fragment">All power of Python 3</li>
+						<li class="fragment">May be used as a native shell</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>xonsh drawbacks</h2>
+					<ul>
+						<li class="fragment">Not mature enough (v. 0.2.3)</li>
+						<li class="fragment">Changes the main syntax as well</li>
 					</ul>
 				</section>
 
