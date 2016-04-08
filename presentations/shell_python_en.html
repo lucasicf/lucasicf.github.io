@@ -194,10 +194,10 @@ print(out.decode())
 					<h2>IPython</h2>
 					<pre><code class="bash hljs" data-trim contenteditable>
 %env HOME
-%pwd
-%cd
-%ls -l
-%ls -l | grep Downloads
+!pwd
+!cd
+!ls -l
+!ls -l | grep Downloads
 files = !ls # it automatically parses the output into a list
 files
 files = !ls -l
@@ -256,7 +256,8 @@ print(files)
 				<section>
 					<h2>Plumbum</h2>
 					<pre><code class="python hljs" data-trim contenteditable>
-from plumbum import grep, wc
+grep = local['grep']
+wc = local['wc']
 ls['-a'] | grep['\\.']
 ls_grep = ls['-a'] | grep['\\.']
 ls_grep()
@@ -268,6 +269,21 @@ file_count = int((ls_grep | wc['-l'])()) - 2
 file_count
 					</code></pre>
 					<p>Nesting commands</p>
+				</section>
+
+				<section>
+					<h2>Plumbum</h2>
+					<pre><code class="python hljs" data-trim contenteditable>
+from plumbum.commands.processes import ProcessExecutionError
+try:
+    cp = local['cp']
+    cp['i_dont_exist']['neither_do_i']()
+except ProcessExecutionError as e:
+    print('OUT: %s' % e.stdout)
+    print('ERR: %s' % e.stderr)
+    print('Code: %s' % e.retcode)
+					</code></pre>
+					<p>Error code</p>
 				</section>
 
 				<section>
@@ -297,14 +313,14 @@ pip3 install xonsh
 				<section>
 					<h2>xonsh</h2>
 					<pre><code class="python hljs" data-trim contenteditable>
-ls ~
-$(ls ~)
-$(ls ~).split()
-touch "~/file with spaces"
-$(ls ~).split()
-$(ls ~).split('\n')
-$(ls ~).split('\n')[:-1]
-len($(ls ~).split('\n')[:-1])
+ls
+$(ls)
+$(ls).split()
+touch "file with spaces"
+$(ls).split()
+$(ls).split('\n')
+$(ls).split('\n')[:-1]
+len($(ls).split('\n')[:-1])
 					</code></pre>
 					<p>(Again...) Listing files</p>
 				</section>
@@ -312,12 +328,12 @@ len($(ls ~).split('\n')[:-1])
 				<section>
 					<h2>xonsh</h2>
 					<pre><code class="python hljs" data-trim contenteditable>
-arquivos = $(ls ~).split('\n')[:-1]
+arquivos = $(ls).split('\n')[:-1]
 print(arquivos)
 echo @(arquivos)
 
 # Env variable below
-$arquivos = $(ls ~).split('\n')[:-1]
+$arquivos = $(ls).split('\n')[:-1]
 print($arquivos)
 echo $arquivos
 					</code></pre>
@@ -328,7 +344,7 @@ echo $arquivos
 					<h2>xonsh</h2>
 					<pre><code class="python hljs" data-trim contenteditable>
 def ls_files_home():
-    return $(ls ~).split('\n')[:-1]
+    return $(ls).split('\n')[:-1]
 
 ls_files_home()
 
@@ -337,9 +353,9 @@ def ls_files(dir):
 
 ls_files('/')
 ls_files($HOME)
+ls_files(${'HOME'})
 
-home_var_name = 'HOME'
-ls_files(${home_var_name})
+$HOME == ${'HOME'}
 					</code></pre>
 					<p>Functions: plain old Python</p>
 				</section>
