@@ -15,7 +15,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
 
 		<link rel="stylesheet" href="css/reveal.css">
-		<link rel="stylesheet" href="css/theme/black.css" id="theme">
+		<link rel="stylesheet" href="css/theme/white.css" id="theme">
 
 		<!-- Code syntax highlighting -->
 		<link rel="stylesheet" href="lib/css/zenburn.css">
@@ -44,26 +44,46 @@
 					<h1>Tired of shell scripting?</h1>
 					<h3>Python-based alternatives</h3>
 					<p>
-						<small>Lucas Inojosa / <a href="http://twitter.com/hakimel">lucas.inojosa@gmail.com</a></small>
+						<small>Lucas Inojosa / <a href="mailto:lucas.inojosa@gmail.com">lucas.inojosa@gmail.com</a></small>
 					</p>
 				</section>
 
 				<section>
-					<h2>Shell script</h2>
+					<h2>System commands</h2>
 					<pre><code class="bash hljs" data-trim contenteditable>
 ls
 ls -l
 df
 df -h
+ps aux
+touch testfile
+ls
+rm testfile
+					</code></pre>
+					<p>Examples</p>
+				</section>
+
+				<section>
+					<h2>Why Shell script?</h2>
+					<ul>
+						<li class="fragment">Call and connect powerful system commands and executables</li>
+						<li class="fragment">Used by SysAdmins to automate tasks</li>
+						<li class="fragment">Native support in UNIX systems</li>
+						<li class="fragment">Let's assume <i>bash</i> as default</li>
+  					<ul><li class="fragment">Coming soon to <b>Windows 10</b>!</li></ul>
+					</ul>
+				</section>
+
+				<section>
+					<h2>Shell script</h2>
+					<pre><code class="bash hljs" data-trim contenteditable>
 df -h | grep /dev/sda
 df -h | grep /dev/sda | awk '{ print $4 }'
-echo Hello World!
 echo Hello World! > hello.txt
 cat hello.txt
 rm hello.txt
-ps aux
 					</code></pre>
-					<p>Let's execute them individually</p>
+					<p>Combining commands and redirecting output</p>
 				</section>
 
 				<section>
@@ -82,7 +102,7 @@ done
 					<h2>Shell script</h2>
 					<pre><code class="bash hljs" data-trim contenteditable>
 IFS=$'\n'
-PROCESSES=`ps ux`
+PROCESSES=`ps aux`
 for process in $PROCESSES
 do
   echo $process
@@ -95,23 +115,7 @@ done
 					<h2>Shell script</h2>
 					<pre><code class="bash hljs" data-trim contenteditable>
 IFS=$'\n'
-PROCESSES=`ps ux`
-for process in $PROCESSES
-do
-  if [ -n "`echo $process | grep ^$USER`" ]
-  then
-    echo $process
-  fi
-done
-					</code></pre>
-					<p>Current processes from my user</p>
-				</section>
-
-				<section>
-					<h2>Shell script</h2>
-					<pre><code class="bash hljs" data-trim contenteditable>
-IFS=$'\n'
-PROCESSES=`ps ux`
+PROCESSES=`ps aux`
 for process in $PROCESSES
 do
   if [[ $process =~ ^$USER.*$ ]]
@@ -120,15 +124,7 @@ do
   fi
 done
 					</code></pre>
-					<p>Bash-based code</p>
-				</section>
-
-				<section>
-					<h2>Shell script advantages</h2>
-					<ul>
-						<li class="fragment">Easy to call/nest powerful system commands and executables</li>
-						<li class="fragment">Native support in UNIX systems</li>
-					</ul>
+					<p>Current processes from my user</p>
 				</section>
 
 				<section>
@@ -187,52 +183,6 @@ print(out.decode())
 					<h2>Pure Python drawbacks</h2>
 					<ul>
 						<li class="fragment">Too much code compared to shell scripting</li>
-					</ul>
-				</section>
-
-				<section>
-					<h2>IPython</h2>
-					<pre><code class="bash hljs" data-trim contenteditable>
-%env HOME
-!pwd
-!cd
-!ls -l
-!ls -l | grep Downloads
-files = !ls # it automatically parses the output into a list
-files
-files = !ls -l
-files
-					</code></pre>
-					<p>Accessing env variables and listing</p>
-				</section>
-
-				<section>
-					<h2>IPython</h2>
-					<pre><code class="python hljs" data-trim contenteditable>
-type(files)
-files.grep('Downloads')
-
-for fileline in files:
-    print(fileline.split()[-1])
-
-for fileline in files.fields():
-    print(fileline[-1])
-					</code></pre>
-					<p>The SList object</p>
-				</section>
-
-				<section>
-					<h2>IPython advantages</h2>
-					<ul>
-						<li class="fragment">Easy to call/nest powerful system commands and executables</li>
-					</ul>
-				</section>
-
-				<section>
-					<h2>IPython drawbacks</h2>
-					<ul>
-						<li class="fragment">Changes the language's syntax</li>
-						<li class="fragment">May require an exact IPython version</li>
 					</ul>
 				</section>
 
@@ -303,8 +253,56 @@ except ProcessExecutionError as e:
 				</section>
 
 				<section>
+					<h2>IPython</h2>
+					<pre><code class="bash hljs" data-trim contenteditable>
+%env HOME
+!pwd
+!cd
+!ls -l
+!ls -l | grep Downloads
+files = !ls # it automatically parses the output into a list
+files
+files = !ls -l
+files
+					</code></pre>
+					<p>Accessing env variables and listing</p>
+				</section>
+
+				<section>
+					<h2>IPython</h2>
+					<pre><code class="python hljs" data-trim contenteditable>
+type(files)
+files.grep('Downloads')
+
+for fileline in files:
+    print(fileline.split()[-1])
+
+for fileline in files.fields():
+    print(fileline[-1])
+					</code></pre>
+					<p>The SList object</p>
+				</section>
+
+				<section>
+					<h2>IPython advantages</h2>
+					<ul>
+						<li class="fragment">Easy to call/nest powerful system commands and executables</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>IPython drawbacks</h2>
+					<ul>
+						<li class="fragment">Changes the language's syntax</li>
+						<li class="fragment">May require an exact IPython version</li>
+					</ul>
+				</section>
+
+				<section>
 					<h2>xonsh</h2>
 					<pre><code class="bash hljs" data-trim contenteditable>
+# https://github.com/scopatz/xonsh
+# http://xon.sh/
 pip3 install xonsh
 					</code></pre>
 					<p>Installing xonsh</p>
@@ -363,11 +361,11 @@ $HOME == ${'HOME'}
 				<section>
 					<h2>xonsh</h2>
 					<pre><code class="python hljs" data-trim contenteditable>
-ps ux
-$(ps ux)
-$(ps ux).split('\n')
-$(ps ux).split('\n')[:-1]
-[proc.split() for proc in $(ps ux).split('\n')[:-1]]
+ps aux
+$(ps aux)
+$(ps aux).split('\n')
+$(ps aux).split('\n')[:-1]
+[proc.split() for proc in $(ps aux).split('\n')[:-1]]
 					</code></pre>
 					<p>Listing processes</p>
 				</section>
@@ -375,7 +373,7 @@ $(ps ux).split('\n')[:-1]
 				<section>
 					<h2>xonsh</h2>
 					<pre><code class="python hljs" data-trim contenteditable>
-procs_info = [proc.split() for proc in $(ps ux).split('\n')[:-1]]
+procs_info = [proc.split() for proc in $(ps aux).split('\n')[:-1]]
 headers = procs_info[0]
 procs = []
 for proc_info in procs_info[1:]:
