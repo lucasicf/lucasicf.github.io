@@ -48,6 +48,16 @@
 					</p>
 				</section>
 
+				<section data-background="recife-olinda.jpg">
+					<h2>Who am I?</h1>
+					<ul>
+						<li class="fragment">Lucas Inojosa</li>
+						<li class="fragment"><a href="mailto:linojosa@thoughtworks.com">linojosa@thoughtworks.com</a></li>
+						<li class="fragment">Consultant/Developer @ ThoughtWorks Recife</li>
+						<li class="fragment">Brazilian, born in Recife</li>
+					</ul>
+				</section>
+
 				<section>
 					<h2>System commands</h2>
 					<pre><code class="bash hljs" data-trim contenteditable>
@@ -137,18 +147,6 @@ done
 
 				<section>
 					<h1>Python-based alternatives</h1>
-				</section>
-
-				<section>
-					<h2>Pure python</h2>
-					<pre><code class="python hljs" data-trim contenteditable>
-#!/usr/bin/env python
-from os import listdir
-listdir()
-for file in listdir():
-    print(file)
-					</code></pre>
-					<p>Simply listing files</p>
 				</section>
 
 				<section>
@@ -286,7 +284,9 @@ for fileline in files.fields():
 				<section>
 					<h2>IPython advantages</h2>
 					<ul>
-						<li class="fragment">Easy to call/nest powerful system commands and executables</li>
+						<li class="fragment">Clear and simple syntax to call system commands</li>
+						<li class="fragment">More alike to a shell</li>
+						<li class="fragment">All power of Python 3</li>
 					</ul>
 				</section>
 
@@ -294,7 +294,7 @@ for fileline in files.fields():
 					<h2>IPython drawbacks</h2>
 					<ul>
 						<li class="fragment">Changes the language's syntax</li>
-						<li class="fragment">May require an exact IPython version</li>
+						<li class="fragment">Still not a native shell</li>
 					</ul>
 				</section>
 
@@ -412,17 +412,16 @@ chsh -s /usr/local/bin/xonsh
 				<section>
 					<h2>xonsh advantages</h2>
 					<ul>
+						<li class="fragment">Is a native shell</li>
 						<li class="fragment">Bash-like commands</li>
 						<li class="fragment">All power of Python 3</li>
-						<li class="fragment">May be used as a native shell</li>
 					</ul>
 				</section>
 
 				<section>
 					<h2>xonsh drawbacks</h2>
 					<ul>
-						<li class="fragment">Not mature enough (v. 0.2.3)</li>
-						<li class="fragment">Changes the main syntax as well</li>
+						<li class="fragment">Not mature enough (v. 0.3.0)</li>
 					</ul>
 				</section>
 
