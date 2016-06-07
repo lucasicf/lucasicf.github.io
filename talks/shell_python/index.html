@@ -48,10 +48,10 @@
 					</p>
 				</section>
 
-				<section data-background="recife-olinda.jpg">
+				<section data-background="img/recife-olinda.jpg">
 					<h2>Who am I?</h1>
 					<ul>
-						<li class="fragment">Lucas Inojosa</li>
+						<li class="fragment">Lucas <span style="color: #C0C0C0;">"Monstro"</span> Inojosa</li>
 						<li class="fragment"><a href="mailto:linojosa@thoughtworks.com">linojosa@thoughtworks.com</a></li>
 						<li class="fragment">Consultant/Developer @ ThoughtWorks Recife</li>
 						<li class="fragment">Brazilian, born in Recife</li>
@@ -74,21 +74,10 @@ rm testfile
 				</section>
 
 				<section>
-					<h2>Why Shell script?</h2>
-					<ul>
-						<li class="fragment">Call and connect powerful system commands and executables</li>
-						<li class="fragment">Used by SysAdmins to automate tasks</li>
-						<li class="fragment">Native support in UNIX systems</li>
-						<li class="fragment">Let's assume <i>bash</i> as default</li>
-  					<ul><li class="fragment">Coming soon to <b>Windows 10</b>!</li></ul>
-					</ul>
-				</section>
-
-				<section>
 					<h2>Shell script</h2>
 					<pre><code class="bash hljs" data-trim contenteditable>
-df -h | grep /dev/sda
-df -h | grep /dev/sda | awk '{ print $4 }'
+df -h | grep /dev/disk1
+df -h | grep /dev/disk1 | awk '{ print $4 }'
 echo Hello World! > hello.txt
 cat hello.txt
 rm hello.txt
@@ -106,6 +95,63 @@ do
 done
 					</code></pre>
 					<p>Showing current system processes</p>
+
+  				<pre><code class="hljs" style="max-height: 300px" data-trim>
+USER
+PID
+%CPU
+%MEM
+VSZ
+RSS
+TT
+STAT
+STARTED
+TIME
+COMMAND
+linojosa
+663
+7.8
+1.1
+2947004
+93820
+??
+S
+8:55AM
+0:08.89
+/Applications/Google
+Chrome.app/Contents/Versions/51.0.2704.79/Google
+Chrome
+Helper.app/Contents/MacOS/Google
+Chrome
+Helper
+--type=ppapi
+--channel=238.34.645195462
+--ppapi-flash-args
+--lang=en-US
+linojosa
+245
+6.4
+3.3
+4065052
+274080
+??
+S
+8:48AM
+0:52.02
+/Applications/Slack.app/Contents/MacOS/Slack
+-psn_0_32776
+_windowserver
+176
+6.1
+1.4
+3942984
+119428
+??
+
+.
+.
+.
+					</code></pre>
 				</section>
 
 				<section>
@@ -119,33 +165,45 @@ do
 done
 					</code></pre>
 					<p>Fixing the 'each line' problem</p>
-				</section>
 
-				<section>
-					<h2>Shell script</h2>
-					<pre><code class="bash hljs" data-trim contenteditable>
-IFS=$'\n'
-PROCESSES=`ps aux`
-for process in $PROCESSES
-do
-  if [[ $process =~ ^$USER.*$ ]]
-  then
-    echo $process
-  fi
-done
+  				<pre><code class="hljs" style="max-height: 300px" data-trim>
+USER              PID  %CPU %MEM      VSZ    RSS   TT  STAT STARTED      TIME COMMAND
+linojosa          663   8.5  1.3  2948056 109076   ??  S     8:55AM   1:02.57 /Applications/Google Chrome.app/Contents/Versions/51.0.2704.79/Google Chrome Helper.app/Contents/MacOS/Google Chrome Helper --type=ppapi --channel=238.34.645195462 --ppapi-flash-args --lang=en-US
+_windowserver     176   6.8  1.4  3968076 118956   ??  Us    8:47AM   1:36.33 /System/Library/Frameworks/ApplicationServices.framework/Frameworks/CoreGraphics.framework/Resources/WindowServer -daemon
+linojosa          245   6.5  3.2  4056184 265440   ??  S     8:48AM   1:32.96 /Applications/Slack.app/Contents/MacOS/Slack -psn_0_32776
+linojosa          486   3.3  1.5  2902504 129964   ??  S     8:49AM   0:17.09 /opt/homebrew-cask/Caskroom/iterm2/2.1.1/iTerm.app/Contents/MacOS/iTerm2
+root              619   1.2  0.0  2470552   1992   ??  Ss    8:50AM   0:00.04 /usr/libexec/systemstatsd
+linojosa          372   0.2  1.8  4021184 152468   ??  S     8:48AM   0:17.46 /Applications/Dropbox.app/Contents/MacOS/Dropbox
+linojosa          241   0.2  1.1  3747124  88884   ??  S     8:48AM   0:08.78 /Applications/Screenhero.app/Contents/MacOS/Screenhero -psn_0_24582
+root               39   0.1  0.2  2500660  15976   ??  Ss    8:47AM   0:00.56 /usr/libexec/UserEventAgent (System)
+
+.
+.
 					</code></pre>
-					<p>Current processes from my user</p>
 				</section>
 
 				<section>
-					<h2>Shell script drawbacks</h2>
+					<h2>Why Shell script?</h2>
 					<ul>
-						<li class="fragment">No modern language features available</li>
-						<li class="fragment">Weird syntax</li>
+						<li class="fragment">Call and connect powerful system commands and executables</li>
+						<li class="fragment">Used by SysAdmins to automate tasks</li>
+						<li class="fragment">Native support in UNIX systems</li>
+						<li class="fragment">Let's assume <i>bash</i> as default</li>
+  					<ul><li class="fragment">Coming soon to <b>Windows 10</b>!</li></ul>
 					</ul>
 				</section>
 
 				<section>
+					<h2>Why seek an alternative?</h2>
+					<ul>
+						<li class="fragment">It's powerful, the problem is the language itself...</li>
+						<li class="fragment">No modern language features available</li>
+						<ul><li class="fragment">Weak data structure support</li></ul>
+						<li class="fragment">Weird syntax</li>
+					</ul>
+				</section>
+
+				<section data-background="img/python-background.png" data-background-size="800px">
 					<h1>Python-based alternatives</h1>
 				</section>
 
@@ -191,12 +249,6 @@ from plumbum import local
 ls = local['ls']
 ls
 ls()
-files = ls().split()
-print(files)
-
-ls['-a']
-files = ls['-a']()
-print(files)
 					</code></pre>
 					<p>Listing files</p>
 				</section>
@@ -204,34 +256,45 @@ print(files)
 				<section>
 					<h2>Plumbum</h2>
 					<pre><code class="python hljs" data-trim contenteditable>
-grep = local['grep']
-wc = local['wc']
-ls['-a'] | grep['\\.']
-ls_grep = ls['-a'] | grep['\\.']
-ls_grep()
+from plumbum import local
+ls = local['ls']
 
-files = [f for f in ls_grep().split() if f != '.' and f != '..']
+files = ls().split('\n')
 print(files)
+print(len(files))
 
-file_count = int((ls_grep | wc['-l'])()) - 2
-file_count
+files = ls['-a']().split('\n')
+print(files)
 					</code></pre>
-					<p>Nesting commands</p>
+					<p>Listing files</p>
+
+  				<pre><code class="hljs" style="max-height: 300px" data-trim>
+['Applications', 'Desktop', 'Documents', 'Downloads', 'Dropbox', 'Google Drive', 'Library', 'Movies', 'Music', 'Pictures', 'Projects', 'Public', 'Snapshots', 'VirtualBox VMs', '']
+
+15
+
+['.', '..', '.CFUserTextEncoding', '.DS_Store', '.IntelliJIdea15', '.NERDTreeBookmarks', '.Spotlight-V100', '.Trash', '.Trashes', '.Xauthority', '.atom', '.bash_history', '.bash_profile', '.bashrc', '.berkshelf', '.bundler', '.cache', '.chef', '.chefdk', '.com.apple.timemachine.donotpresent', '.config', '.cpan', '.cpanm', '.cups', '.dbshell', '.dropbox', '.emacs.d', '.fseventsd', '.gbas', '.gem', '.gitattributes', '.gitconfig', '.gitignore', '.gnome2', '.gnupg', '.gradle', '.groovy', '.histfile', '.ipython', '.jenv', '.lesshst', '.local', '.mongorc.js', '.node-gyp', '.npm', '.oh-my-zsh', '.oracle_jre_usage', '.pry_history', '.python_history', '.rnd', '.sh_history', '.sonar', '.ssh', '.subversion', '.swo', '.swp', '.vagrant', '.vagrant.d', '.vim', '.viminfo', '.vimrc', '.virtualenvs', '.xonsh_history', '.xonsh_history.json', '.xonsh_man_completions', '.yjp', '.zcompdump', '.zcompdump-LAlinojosa-5.0.5', '.zcompdump-LAlinojosa-5.2', '.zsh-update', '.zsh_history', '.zshrc', 'Applications', 'Desktop', 'Documents', 'Downloads', 'Dropbox', 'Google Drive', 'Library', 'Movies', 'Music', 'Pictures', 'Projects', 'Public', 'Snapshots', 'VirtualBox VMs', '']
+					</code></pre>
 				</section>
 
 				<section>
 					<h2>Plumbum</h2>
 					<pre><code class="python hljs" data-trim contenteditable>
-from plumbum.commands.processes import ProcessExecutionError
-try:
-    cp = local['cp']
-    cp['i_dont_exist']['neither_do_i']()
-except ProcessExecutionError as e:
-    print('OUT: %s' % e.stdout)
-    print('ERR: %s' % e.stderr)
-    print('Code: %s' % e.retcode)
+from plumbum import local
+grep = local['grep']
+wc = local['wc']
+ls_grep = ls['-a'] | grep['\\.']
+
+ls_grep
+ls_grep().split('\n')
 					</code></pre>
-					<p>Error code</p>
+					<p>Nesting commands</p>
+
+  				<pre><code class="hljs" style="max-height: 300px" data-trim>
+Pipeline(BoundCommand(LocalCommand(/bin/ls), ['-a']), BoundCommand(LocalCommand(/usr/bin/grep), ['\\.']))
+
+['.', '..', '.CFUserTextEncoding', '.DS_Store', '.IntelliJIdea15', '.NERDTreeBookmarks', '.Spotlight-V100', '.Trash', '.Trashes', '.Xauthority', '.atom', '.bash_history', '.bash_profile', '.bashrc', '.berkshelf', '.bundler', '.cache', '.chef', '.chefdk', '.com.apple.timemachine.donotpresent', '.config', '.cpan', '.cpanm', '.cups', '.dbshell', '.dropbox', '.emacs.d', '.fseventsd', '.gbas', '.gem', '.gitattributes', '.gitconfig', '.gitignore', '.gnome2', '.gnupg', '.gradle', '.groovy', '.histfile', '.ipython', '.jenv', '.lesshst', '.local', '.mongorc.js', '.node-gyp', '.npm', '.oh-my-zsh', '.oracle_jre_usage', '.pry_history', '.python_history', '.rnd', '.sh_history', '.sonar', '.ssh', '.subversion', '.swo', '.swp', '.vagrant', '.vagrant.d', '.vim', '.viminfo', '.vimrc', '.virtualenvs', '.xonsh_history', '.xonsh_history.json', '.xonsh_man_completions', '.yjp', '.zcompdump', '.zcompdump-LAlinojosa-5.0.5', '.zcompdump-LAlinojosa-5.2', '.zsh-update', '.zsh_history', '.zshrc', '']
+					</code></pre>
 				</section>
 
 				<section>
@@ -258,10 +321,6 @@ except ProcessExecutionError as e:
 !cd
 !ls -l
 !ls -l | grep Downloads
-files = !ls # it automatically parses the output into a list
-files
-files = !ls -l
-files
 					</code></pre>
 					<p>Accessing env variables and listing</p>
 				</section>
@@ -269,16 +328,37 @@ files
 				<section>
 					<h2>IPython</h2>
 					<pre><code class="python hljs" data-trim contenteditable>
+files = !ls -l # it automatically parses the output into a list
+
 type(files)
 files.grep('Downloads')
 
-for fileline in files:
-    print(fileline.split()[-1])
-
 for fileline in files.fields():
-    print(fileline[-1])
+    print(fileline)
 					</code></pre>
 					<p>The SList object</p>
+
+  				<pre><code class="hljs" style="max-height: 300px" data-trim>
+IPython.utils.text.SList
+
+['drwx------+ 18 linojosa  staff   612 Jun  7 09:39 Downloads']
+
+['total', '0']
+['drwx------', '10', 'linojosa', 'staff', '340', 'Feb', '24', '13:08', 'Applications']
+['drwx------+', '4', 'linojosa', 'staff', '136', 'Jun', '6', '10:56', 'Desktop']
+['drwx------+', '14', 'linojosa', 'staff', '476', 'Jun', '6', '16:14', 'Documents']
+['drwx------+', '18', 'linojosa', 'staff', '612', 'Jun', '7', '09:39', 'Downloads']
+['drwx------@', '14', 'linojosa', 'staff', '476', 'Jun', '7', '08:48', 'Dropbox']
+['drwx------@', '13', 'linojosa', 'staff', '442', 'Jun', '7', '08:48', 'Google', 'Drive']
+['drwx------@', '54', 'linojosa', 'staff', '1836', 'May', '27', '18:42', 'Library']
+['drwx------+', '3', 'linojosa', 'staff', '102', 'Aug', '11', '2015', 'Movies']
+['drwx------+', '4', 'linojosa', 'staff', '136', 'Apr', '25', '17:22', 'Music']
+['drwx------+', '10', 'linojosa', 'staff', '340', 'Jun', '1', '15:21', 'Pictures']
+['drwxr-xr-x', '3', 'linojosa', 'staff', '102', 'Jun', '7', '09:50', 'Projects']
+['drwxr-xr-x+', '5', 'linojosa', 'staff', '170', 'Aug', '11', '2015', 'Public']
+['drwxr-xr-x', '2', 'linojosa', 'staff', '68', 'Mar', '2', '17:58', 'Snapshots']
+['drwx------', '3', 'linojosa', 'staff', '102', 'Apr', '7', '11:38', 'VirtualBox', 'VMs']
+					</code></pre>
 				</section>
 
 				<section>
@@ -312,68 +392,75 @@ pip3 install xonsh
 					<h2>xonsh</h2>
 					<pre><code class="python hljs" data-trim contenteditable>
 ls
-$(ls)
-$(ls).split()
-touch "file with spaces"
-$(ls).split()
-$(ls).split('\n')
-$(ls).split('\n')[:-1]
-len($(ls).split('\n')[:-1])
+ps aux
+df -h
 					</code></pre>
-					<p>(Again...) Listing files</p>
+					<p>Basic shell commands work!</p>
 				</section>
 
 				<section>
 					<h2>xonsh</h2>
 					<pre><code class="python hljs" data-trim contenteditable>
-arquivos = $(ls).split('\n')[:-1]
+arquivos = $(ls).split('\n')
 print(arquivos)
 echo @(arquivos)
-
-# Env variable below
-$arquivos = $(ls).split('\n')[:-1]
-print($arquivos)
-echo $arquivos
 					</code></pre>
 					<p>Printing variables in both Shell and Python statements</p>
+
+  				<pre><code class="hljs" style="max-height: 300px" data-trim>
+['Applications/', 'Desktop/', 'Documents/', 'Downloads/', 'Dropbox/', 'Google Drive/', 'Library/', 'Movies/', 'Music/', 'Pictures/', 'Projects/', 'Public/', 'Snapshots/', 'VirtualBox VMs/', '']
+
+Applications/ Desktop/ Documents/ Downloads/ Dropbox/ Google Drive/ Library/ Movies/ Music/ Pictures/ Projects/ Public/ Snapshots/ VirtualBox VMs/
+					</code></pre>
 				</section>
 
 				<section>
 					<h2>xonsh</h2>
 					<pre><code class="python hljs" data-trim contenteditable>
-def ls_files_home():
-    return $(ls).split('\n')[:-1]
-
-ls_files_home()
-
 def ls_files(dir):
-    return $(ls @(dir)).split('\n')[:-1]
+    return [file for file in $(ls @(dir)).split('\n') if file]
 
 ls_files('/')
 ls_files($HOME)
-ls_files(${'HOME'})
-
-$HOME == ${'HOME'}
 					</code></pre>
 					<p>Functions: plain old Python</p>
-				</section>
 
-				<section>
-					<h2>xonsh</h2>
-					<pre><code class="python hljs" data-trim contenteditable>
-ps aux
-$(ps aux)
-$(ps aux).split('\n')
-$(ps aux).split('\n')[:-1]
-[proc.split() for proc in $(ps aux).split('\n')[:-1]]
+  				<pre><code class="hljs" style="max-height: 300px" data-trim>
+['Applications/', 'Library/', 'Network/', 'System/', 'Users/', 'Volumes/', 'bin/', 'dev/', 'etc', 'home/', 'hs_err_pid5502.log', 'installer.failurerequests', 'local.cfg', 'mnt/', 'net/', 'opt/', 'private/', 'sbin/', 'sockets.log', 'tmp', 'usr/', 'var']
+
+['Applications/', 'Desktop/', 'Documents/', 'Downloads/', 'Dropbox/', 'Google Drive/', 'Library/', 'Movies/', 'Music/', 'Pictures/', 'Projects/', 'Public/', 'Snapshots/', 'VirtualBox VMs/']
 					</code></pre>
-					<p>Listing processes</p>
+				</section>
+
+				<section>
+					<h2>xonsh</h2>
+					<pre><code class="hljs" data-trim contenteditable>
+NAME    AGE    EMAIL
+Alice   23     alice@email.com
+Bob     27     bob@email.com
+Eve     31     eve@email.com
+					</code></pre>
+					<p>Example: building a nice data structure from output</p>
+
+  				<pre><code class="python hljs" style="max-height: 300px" data-trim>
+[
+  {'Name': 'Alice',
+   'Age': '23',
+   'Email': 'bob@email.com'},
+  {'Name': 'Bob',
+   'Age': '27',
+   'Email': 'bob@email.com'},
+  {'Name': 'Eve',
+   'Age': '31',
+   'Email': 'eve@email.com'}
+]
+					</code></pre>
 				</section>
 
 				<section>
 					<h2>xonsh</h2>
 					<pre><code class="python hljs" data-trim contenteditable>
-procs_info = [proc.split() for proc in $(ps aux).split('\n')[:-1]]
+procs_info = [proc.split() for proc in $(ps aux).split('\n') if proc][:11]
 headers = procs_info[0]
 procs = []
 for proc_info in procs_info[1:]:
@@ -382,31 +469,27 @@ for proc_info in procs_info[1:]:
         proc_dict[header] = proc_info[index]
     procs.append(proc_dict)
 
-procs
-procs[0]
-echo @(procs)
+import json
+echo @(json.dumps(procs, indent=4)) > procs.json
+
+cat procs.json
 					</code></pre>
-					<p>Building a dictionary from the command's output</p>
+					<p>Building a dict from the first 10 processes</p>
 				</section>
 
 				<section>
 					<h2>xonsh</h2>
 					<pre><code class="python hljs" data-trim contenteditable>
-import json
-echo @(json.dumps(procs))
-echo @(json.dumps(procs)) > procs.json
-cat procs.json
+print([
+    proc['%CPU'] for proc in procs
+      if 'Screenhero' in proc['COMMAND']
+][0])
 					</code></pre>
-					<p>Saving as a JSON file</p>
-				</section>
+					<p>Screenhero's CPU usage?</p>
 
-				<section>
-					<h2>xonsh</h2>
-					<pre><code class="bash hljs" data-trim contenteditable>
-sudo echo "/usr/local/bin/xonsh" >> /etc/shells
-chsh -s /usr/local/bin/xonsh
+  				<pre><code class="hljs" style="max-height: 300px" data-trim>
+0.2
 					</code></pre>
-					<p>Setting as the standard shell</p>
 				</section>
 
 				<section>
@@ -423,6 +506,16 @@ chsh -s /usr/local/bin/xonsh
 					<ul>
 						<li class="fragment">Not mature enough (v. 0.3.0)</li>
 					</ul>
+				</section>
+
+				<section>
+					<h1>Questions?</h1>
+				</section>
+
+				<section data-background="#aaaaaa">
+					<h1>Thank You</h1>
+					<h2>ThoughtWorks is hiring</h2>
+					<p><a target="_blank" href="https://www.thoughtworks.com/careers">https://www.thoughtworks.com/careers</a></p>
 				</section>
 
 			</div>
