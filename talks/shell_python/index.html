@@ -203,6 +203,35 @@ root               39   0.1  0.2  2500660  15976   ??  Ss    8:47AM   0:00.56 /u
 					</ul>
 				</section>
 
+				<section>
+					<pre><code class="bash hljs" data-trim contenteditable>
+VARIABLE = "content"
+if [-n $VARIABLE]
+then
+  echo "VARIABLE is not empty"
+fi
+          </code></pre>
+          <p class="fragment">Wrong...</p>
+  				<pre class="fragment"><code class="hljs" style="max-height: 300px" data-trim>
+bash: VARIABLE: command not found
+bash: [-n: command not found
+          </code></pre>
+				</section>
+
+				<section>
+					<pre><code class="bash hljs" data-trim contenteditable>
+VARIABLE="content"
+if [ -n $VARIABLE ]
+then
+  echo "VARIABLE is not empty"
+fi
+          </code></pre>
+          <p>Spaces matter</p>
+  				<pre><code class="hljs" style="max-height: 300px" data-trim>
+VARIABLE is not empty
+          </code></pre>
+				</section>
+
 				<section data-background="img/python-background.png" data-background-size="800px">
 					<h1>Python-based alternatives</h1>
 				</section>
@@ -366,7 +395,7 @@ IPython.utils.text.SList
 					<ul>
 						<li class="fragment">Clear and simple syntax to call system commands</li>
 						<li class="fragment">More alike to a shell</li>
-						<li class="fragment">All power of Python 3</li>
+						<li class="fragment">All power of Python</li>
 					</ul>
 				</section>
 
@@ -504,7 +533,7 @@ print([
 				<section>
 					<h2>xonsh drawbacks</h2>
 					<ul>
-						<li class="fragment">Not mature enough (v. 0.3.0)</li>
+						<li class="fragment">Not mature enough (v. 0.3.3)</li>
 					</ul>
 				</section>
 
